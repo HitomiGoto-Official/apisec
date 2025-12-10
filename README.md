@@ -52,14 +52,14 @@ pip install fastapi uvicorn
 2. Start the FastAPI development server:
 
 ```bash
-uvicorn main:app --reload
+fastapi dev main.py
 ```
 
 Meaning of the command:
 
-- **main** → your Python file (`main.py`)
-- **app** → your FastAPI instance (`app = FastAPI()`)
-- **--reload** → auto-restart when code changes
+- **fastapi** → your FastAPI instance (`app = FastAPI()`)
+- **dev** → your running mode (`dev`)
+- **main.py** → your Python file (`main.py`)
 
 3. After the server starts, open the browser:
 
