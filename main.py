@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-book = [
+books = [
     {"id":1, "title":"Mehdi", "author":"Mehdi Orang", "pages":123},
     {"id":2, "title":"Nene", "author":"Hitomi Goto", "pages":321},
     {"id":3, "title":"Hoho", "author":"Hitomi Goto", "pages":321},
@@ -20,13 +20,13 @@ class Book(BaseModel):
 def get_books(limit: int | None = None):
     """Get all books, optionally limited by count."""
     if limit:
-        return{"books":book[:limit]}
-    return{"books":book}
+        return{"books":books[:limit]}
+    return{"books":books}
 
 @app.get("/books/{book_id}")
 def get_book(book_id:int):
     """Get a specific book by ID."""
-    for b in book:
+    for b in books:
         if b["id"] == book_id:
             return b  
     return{"message":"Book Not found"}
@@ -35,18 +35,20 @@ def get_book(book_id:int):
 def add_book(newBook: Book):
     """Create a new book entry."""
     new_book = {
-        "id":len(book) + 1,
+        "id":len(books) + 1,
         "title":newBook.title,
         "author":newBook.author,
         "pages":newBook.pages
     }
-    book.append(new_book)
+    books.append(new_book)
 
 @app.delete("/books/{book_id}")
 def del_book(book_id: int):
     """Delete a specific book by ID."""
-    for delb in book:
-        if delb["id"] == book_id:
-            book.pop(delb)
-            return{"books":book}
-    return{"message":"Book Not Found"}
+    for index, delb in enumerate(books):
+        #print(index, delb, book[index])
+        return{"id":index, "title":books[index]}
+        #if delb[index] == book_id:
+            #x = book.pop(delb[index])
+            #return{"books":x}
+    #return{"message":"Book Not Found"}
